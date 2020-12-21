@@ -1,0 +1,31 @@
+{
+  "name": "clarisse",
+  "version": "0.0.1",
+  "description": "framework with threejs, typescript, sass and webpack",
+  "main": "main.ts",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lexiboi/clarisse.git"
+  },
+  "keywords": [
+    "threejs",
+    "sass",
+    "typescript",
+    "webpack"
+  ],
+  "author": "lexiboi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lexiboi/clarisse/issues"
+  },
+  "homepage": "https://github.com/lexiboi/clarisse#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
