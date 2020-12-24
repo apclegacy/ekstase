@@ -4,8 +4,9 @@
   "description": "framework with threejs, typescript, sass and webpack",
   "main": "main.ts",
   "scripts": {
-    "dev": "parcel src/view/index.html",
-    "build": "parcel build src/view/index.html"
+    "type": "tsc --noEmit",
+    "dev": "parcel src/views/index.html",
+    "build": "parcel build src/views/index.html"
   },
   "repository": {
     "type": "git",
