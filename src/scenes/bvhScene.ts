@@ -49,8 +49,6 @@ const bvhScene = () => {
     scene = new Scene();
     scene.background = new Color(0xeeeeee);
 
-    scene.add(new GridHelper(400, 10));
-
     // renderer
     renderer = new WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -58,8 +56,10 @@ const bvhScene = () => {
     document.body.appendChild(renderer.domElement);
 
     controls = new OrbitControls(camera, renderer.domElement);
-    controls.minDistance = 300;
-    controls.maxDistance = 700;
+    controls.minDistance = 900;
+    controls.maxDistance = 900;
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.minPolarAngle = 0;
   };
 
   const animate = () => {
