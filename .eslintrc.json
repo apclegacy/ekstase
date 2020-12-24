@@ -14,6 +14,21 @@
     "plugins": [
         "@typescript-eslint"
     ],
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".ts"],
+            "moduleDirectory": ["node_modules", "src/"]
+          }
+        }
+    },
     "rules": {
-    }
+        "import/extensions": [
+           "error",
+           "ignorePackages",
+           {
+             "ts": "never"
+           }
+        ]
+     }
 }
