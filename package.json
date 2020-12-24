@@ -38,5 +38,7 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/parcel-env": "0.0.0"
+  }
 }
