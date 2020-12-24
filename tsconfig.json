@@ -4,6 +4,8 @@
     "paths": {
       "~*": ["./*"]
     },
+    "target": "es6", 
+    "moduleResolution": "node",
     "noImplicitReturns": true,
     "strict": true,
     "noUnusedLocals": true,
