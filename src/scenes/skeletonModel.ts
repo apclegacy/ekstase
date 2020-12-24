@@ -2,11 +2,11 @@ import {
   LineSegments,
   Matrix4,
   LineBasicMaterial,
-  Color,
   Vector3,
   BufferGeometry,
   Float32BufferAttribute,
   Bone,
+  Color,
 } from 'three';
 
 const vector = new Vector3();
@@ -38,10 +38,10 @@ class SkeletonModel extends LineSegments {
 
     const geometry = new BufferGeometry();
 
+    const color = new Color(1, 1, 1);
+
     const vertices = [];
     const colors = [];
-
-    const color = new Color(0, 0, 0);
 
     for (let i = 0; i < bones.length; i += 1) {
       const b = bones[i];
@@ -58,7 +58,12 @@ class SkeletonModel extends LineSegments {
     geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
 
     const material = new LineBasicMaterial({
-      vertexColors: true, depthTest: false, depthWrite: false, toneMapped: false, transparent: true,
+      vertexColors: true,
+      depthTest: false,
+      depthWrite: false,
+      toneMapped: false,
+      transparent: true,
+      opacity: 0.1,
     });
 
     super(geometry, material);

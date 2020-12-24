@@ -3,7 +3,6 @@ import {
   Scene,
   WebGLRenderer,
   Clock,
-  Color,
   AnimationMixer,
   Group,
 } from 'three';
@@ -13,7 +12,7 @@ import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
 
 import SkeletonModel from './skeletonModel';
 
-import pirouette from '../assets/motion/olivia.bvh';
+import pirouette from '../assets/motion/elena.bvh';
 
 const bvhScene = () => {
   const clock = new Clock();
@@ -44,18 +43,19 @@ const bvhScene = () => {
   const init = () => {
     camera = new PerspectiveCamera(60,
       window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.set(0, 200, 300);
+    camera.position.set(0, 500, 700);
 
     scene = new Scene();
-    scene.background = new Color(255, 255, 255);
 
     // renderer
-    renderer = new WebGLRenderer({ antialias: true });
+    renderer = new WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.autoClearColor = false;
     document.body.appendChild(renderer.domElement);
 
     controls = new OrbitControls(camera, renderer.domElement);
+
     controls.minDistance = 900;
     controls.maxDistance = 900;
     controls.maxPolarAngle = Math.PI / 2;
