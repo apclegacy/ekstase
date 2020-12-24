@@ -63,7 +63,7 @@ class SkeletonModel extends LineSegments {
       depthWrite: false,
       toneMapped: false,
       transparent: true,
-      opacity: 0.1,
+      opacity: 0.4,
     });
 
     super(geometry, material);

@@ -1,9 +1,10 @@
-import bvhScene from './scenes/bvhScene';
+// import simpleTrailScene from './scenes/simple-trail/simpleTrailScene';
+import effectTrailScene from './scenes/effectTrailScene';
 
 const {
   init,
   animate,
-} = bvhScene();
+} = effectTrailScene();
 
 init();
 animate();

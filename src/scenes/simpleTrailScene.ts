@@ -10,7 +10,7 @@ import {
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
 
-import SkeletonModel from './skeletonModel';
+import SkeletonModel from '../models/skeletonModel';
 
 import pirouette from '../assets/motion/elena.bvh';
 
