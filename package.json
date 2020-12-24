@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "framework with threejs, typescript, sass and webpack",
   "main": "main.ts",
-  "scripts": {},
+  "scripts": {
+    "dev": "parcel src/view/index.html",
+    "build": "parcel build src/view/index.html"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lexiboi/clarisse.git"
@@ -12,7 +15,7 @@
     "threejs",
     "sass",
     "typescript",
-    "webpack"
+    "parcel"
   ],
   "author": "lexiboi",
   "license": "ISC",
@@ -27,6 +30,7 @@
     "eslint": "^7.16.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "parcel-bundler": "^1.12.4",
     "typescript": "^4.1.3"
   },
   "config": {
