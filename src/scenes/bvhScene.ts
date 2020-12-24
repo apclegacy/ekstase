@@ -3,15 +3,15 @@ import {
   Scene,
   WebGLRenderer,
   Clock,
-  GridHelper,
   Color,
   AnimationMixer,
-  SkeletonHelper,
   Group,
 } from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
+
+import SkeletonModel from './skeletonModel';
 
 import pirouette from '../assets/motion/olivia.bvh';
 
@@ -25,19 +25,19 @@ const bvhScene = () => {
   let controls: OrbitControls;
 
   let mixer: AnimationMixer;
-  let skeletonHelper: SkeletonHelper;
+  let skeletonModel: SkeletonModel;
 
   loader.load(pirouette, (result) => {
-    skeletonHelper = new SkeletonHelper(result.skeleton.bones[0]);
-    (skeletonHelper as any).skeleton = result.skeleton;
+    skeletonModel = new SkeletonModel(result.skeleton.bones[0]);
+    (skeletonModel as any).skeleton = result.skeleton;
 
     const boneContainer = new Group();
     boneContainer.add(result.skeleton.bones[0]);
 
-    scene.add(skeletonHelper);
+    scene.add(skeletonModel);
     scene.add(boneContainer);
 
-    mixer = new AnimationMixer(skeletonHelper);
+    mixer = new AnimationMixer(skeletonModel);
     mixer.clipAction(result.clip).setEffectiveWeight(1.0).play();
   });
 
@@ -47,7 +47,7 @@ const bvhScene = () => {
     camera.position.set(0, 200, 300);
 
     scene = new Scene();
-    scene.background = new Color(0xeeeeee);
+    scene.background = new Color(255, 255, 255);
 
     // renderer
     renderer = new WebGLRenderer({ antialias: true });
