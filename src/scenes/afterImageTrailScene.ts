@@ -10,6 +10,10 @@ import {
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
 
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
+
 import SkeletonModel from '../models/skeletonModel';
 
 import pirouette from '../assets/motion/elena.bvh';
@@ -24,7 +28,11 @@ const bvhScene = () => {
   let controls: OrbitControls;
 
   let mixer: AnimationMixer;
+
   let skeletonModel: SkeletonModel;
+
+  let composer : EffectComposer;
+  let afterImagePass : AfterimagePass;
 
   loader.load(pirouette, (result) => {
     skeletonModel = new SkeletonModel(result.skeleton.bones[0]);
@@ -54,12 +62,22 @@ const bvhScene = () => {
     renderer.autoClearColor = true;
     document.body.appendChild(renderer.domElement);
 
+    // controls
+
     controls = new OrbitControls(camera, renderer.domElement);
 
     controls.minDistance = 900;
     controls.maxDistance = 900;
     controls.maxPolarAngle = Math.PI / 2;
     controls.minPolarAngle = 0;
+
+    // postprocessing
+
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+
+    afterImagePass = new AfterimagePass(0.98);
+    composer.addPass(afterImagePass);
   };
 
   const animate = () => {
@@ -68,7 +86,7 @@ const bvhScene = () => {
     if (mixer) {
       mixer.update(delta);
     }
-    renderer.render(scene, camera);
+    composer.render();
   };
 
   return {

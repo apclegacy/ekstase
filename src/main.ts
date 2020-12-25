@@ -1,10 +1,10 @@
-// import simpleTrailScene from './scenes/simple-trail/simpleTrailScene';
-import effectTrailScene from './scenes/effectTrailScene';
+// import simpleTrailScene from './scenes/simpleTrailScene';
+import afterImageTrailScene from './scenes/afterImageTrailScene';
 
 const {
   init,
   animate,
-} = effectTrailScene();
+} = afterImageTrailScene();
 
 init();
 animate();

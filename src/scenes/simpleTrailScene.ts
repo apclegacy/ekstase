@@ -12,7 +12,7 @@ import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
 
 import SkeletonModel from '../models/skeletonModel';
 
-import pirouette from '../assets/motion/elena.bvh';
+import pirouette from '../assets/motion/vaso.bvh';
 
 const bvhScene = () => {
   const clock = new Clock();
