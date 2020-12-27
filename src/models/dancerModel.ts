@@ -7,7 +7,13 @@ import {
   Float32BufferAttribute,
   Bone,
   Color,
+  Group,
+  AnimationMixer,
 } from 'three';
+
+import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
+
+const loader = new BVHLoader();
 
 const vector = new Vector3();
 const boneMatrix = new Matrix4();
@@ -28,17 +34,15 @@ const getBoneList = (bone: any) => {
   return boneList;
 };
 
-class SkeletonModel extends LineSegments {
+class DancerModel extends LineSegments {
   root: Bone;
 
   bones: Bone[];
 
-  constructor(bone: Bone) {
+  constructor(bone: Bone, color: Color, opacity: number) {
     const bones = getBoneList(bone);
 
     const geometry = new BufferGeometry();
-
-    const color = new Color(1, 1, 1);
 
     const vertices = [];
     const colors = [];
@@ -63,12 +67,12 @@ class SkeletonModel extends LineSegments {
       depthWrite: false,
       toneMapped: false,
       transparent: true,
-      opacity: 0.4,
+      opacity,
     });
 
     super(geometry, material);
 
-    this.type = 'SkeletonHelper';
+    this.type = 'SkeletonModel';
 
     this.root = bone;
     this.bones = bones;
@@ -108,4 +112,38 @@ class SkeletonModel extends LineSegments {
   }
 }
 
-export default SkeletonModel;
+const Dancer = (color: Color, opacity: number) => {
+  let dancerModel: DancerModel;
+  let mixer: AnimationMixer;
+  const dancerGroup = new Group();
+
+  const load = (bvh: any) => {
+    loader.load(bvh, (result) => {
+      dancerModel = new DancerModel(result.skeleton.bones[0], color, opacity);
+      (dancerModel as any).skeleton = result.skeleton;
+
+      const boneContainer = new Group();
+      boneContainer.add(result.skeleton.bones[0]);
+
+      dancerGroup.add(dancerModel);
+      dancerGroup.add(boneContainer);
+
+      mixer = new AnimationMixer(dancerModel);
+      mixer.clipAction(result.clip).setEffectiveWeight(1.0).play();
+    });
+  };
+
+  const animate = (delta: number) => {
+    if (mixer) {
+      mixer.update(delta);
+    }
+  };
+
+  return {
+    load,
+    animate,
+    dancer: dancerGroup,
+  };
+};
+
+export default Dancer;

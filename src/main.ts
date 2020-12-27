@@ -1,10 +1,10 @@
-// import simpleTrailScene from './scenes/simpleTrailScene';
-import afterImageTrailScene from './scenes/afterImageTrailScene';
+import dancerScene from './scenes/dancerScene';
+// import roomScene from './scenes/roomScene';
 
 const {
   init,
   animate,
-} = afterImageTrailScene();
+} = dancerScene();
 
 init();
 animate();

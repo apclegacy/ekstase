@@ -3,50 +3,44 @@ import {
   Scene,
   WebGLRenderer,
   Clock,
-  AnimationMixer,
-  Group,
+  Vector2,
+  Color,
 } from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { BVHLoader } from 'three/examples/jsm/loaders/BVHLoader';
 
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
-import SkeletonModel from '../models/skeletonModel';
+import Dancer from '../models/dancerModel';
 
-import pirouette from '../assets/motion/elena.bvh';
+import dancerMotion from '../assets/motion/olivia.bvh';
 
 const bvhScene = () => {
   const clock = new Clock();
-  const loader = new BVHLoader();
 
   let camera: PerspectiveCamera;
   let scene: Scene;
   let renderer: WebGLRenderer;
   let controls: OrbitControls;
 
-  let mixer: AnimationMixer;
-
-  let skeletonModel: SkeletonModel;
-
   let composer : EffectComposer;
   let afterImagePass : AfterimagePass;
+  let bloomPass : UnrealBloomPass;
 
-  loader.load(pirouette, (result) => {
-    skeletonModel = new SkeletonModel(result.skeleton.bones[0]);
-    (skeletonModel as any).skeleton = result.skeleton;
+  const dancerColor = new Color(1, 1, 1);
+  const dancerOpacity = 0.2;
+  const dancerBloom = 3;
 
-    const boneContainer = new Group();
-    boneContainer.add(result.skeleton.bones[0]);
+  const {
+    load: loadDancer,
+    animate: animateDancer,
+    dancer,
+  } = Dancer(dancerColor, dancerOpacity);
 
-    scene.add(skeletonModel);
-    scene.add(boneContainer);
-
-    mixer = new AnimationMixer(skeletonModel);
-    mixer.clipAction(result.clip).setEffectiveWeight(1.0).play();
-  });
+  loadDancer(dancerMotion);
 
   const init = () => {
     camera = new PerspectiveCamera(60,
@@ -62,8 +56,10 @@ const bvhScene = () => {
     renderer.autoClearColor = true;
     document.body.appendChild(renderer.domElement);
 
-    // controls
+    // objects
+    scene.add(dancer);
 
+    // controls
     controls = new OrbitControls(camera, renderer.domElement);
 
     controls.minDistance = 900;
@@ -72,20 +68,22 @@ const bvhScene = () => {
     controls.minPolarAngle = 0;
 
     // postprocessing
-
     composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
 
-    afterImagePass = new AfterimagePass(0.98);
+    afterImagePass = new AfterimagePass(0.98075);
     composer.addPass(afterImagePass);
+
+    bloomPass = new UnrealBloomPass(new Vector2(window.innerWidth, window.innerHeight),
+      dancerBloom, 1, 0);
+    composer.addPass(bloomPass);
+    bloomPass.renderToScreen = true;
   };
 
   const animate = () => {
     requestAnimationFrame(animate);
     const delta = clock.getDelta();
-    if (mixer) {
-      mixer.update(delta);
-    }
+    animateDancer(delta);
     composer.render();
   };
 
