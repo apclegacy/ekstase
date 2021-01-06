@@ -1,10 +1,9 @@
-import dancerScene from './scenes/dancerScene';
-// import roomScene from './scenes/roomScene';
+import Scene from './scenes/dancerScene';
 
 const {
   init,
   animate,
-} = dancerScene();
+} = Scene();
 
 init();
 animate();

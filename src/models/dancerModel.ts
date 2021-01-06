@@ -19,6 +19,12 @@ const vector = new Vector3();
 const boneMatrix = new Matrix4();
 const matrixWorldInv = new Matrix4();
 
+const colors = [
+  'white',
+];
+
+let color = 0; // represents colors index
+
 const getBoneList = (bone: any) => {
   const boneList = [] as Bone[];
 
@@ -45,7 +51,6 @@ class DancerModel extends LineSegments {
     const geometry = new BufferGeometry();
 
     const vertices = [];
-    const colors = [];
 
     for (let i = 0; i < bones.length; i += 1) {
       const b = bones[i];
@@ -53,16 +58,13 @@ class DancerModel extends LineSegments {
       if (b.parent && (b.parent as any).isBone) {
         vertices.push(0, 0, 0);
         vertices.push(0, 0, 0);
-        colors.push(color.r, color.g, color.b);
-        colors.push(color.r, color.g, color.b);
       }
     }
 
     geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3));
-    geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
 
     const material = new LineBasicMaterial({
-      vertexColors: true,
+      vertexColors: false,
       depthTest: false,
       depthWrite: false,
       toneMapped: false,
@@ -85,6 +87,12 @@ class DancerModel extends LineSegments {
     const { bones } = this;
 
     const { geometry } = this;
+
+    const { material } = this;
+
+    (material as any).color = new Color(colors[color]);
+    color += 1;
+    color = color === (colors.length) ? 0 : color;
 
     const position = (geometry as any).getAttribute('position');
 

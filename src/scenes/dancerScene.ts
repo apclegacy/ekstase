@@ -15,6 +15,7 @@ import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
 import Dancer from '../models/dancerModel';
+import Floor from '../models/floorModel';
 
 import dancerMotion from '../assets/motion/olivia.bvh';
 
@@ -30,9 +31,14 @@ const bvhScene = () => {
   let afterImagePass : AfterimagePass;
   let bloomPass : UnrealBloomPass;
 
-  const dancerColor = new Color(1, 1, 1);
-  const dancerOpacity = 0.2;
-  const dancerBloom = 3;
+  const floorRadius = 300;
+  const floorOpacity = 0.7;
+
+  const dancerColor = new Color(0.1, 0.3, 1);
+  const dancerOpacity = 0.4;
+  const dancerBloom = 2.5;
+
+  const floor = new Floor(floorRadius, floorOpacity);
 
   const {
     load: loadDancer,
@@ -44,34 +50,37 @@ const bvhScene = () => {
 
   const init = () => {
     camera = new PerspectiveCamera(60,
-      window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.set(0, 500, 700);
+      window.innerWidth / window.innerHeight, 1, 2000);
+    camera.position.set(0, 700, 700);
 
     scene = new Scene();
 
     // renderer
-    renderer = new WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+    renderer = new WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.autoClearColor = true;
+    renderer.setClearColor(0x000000, 0);
     document.body.appendChild(renderer.domElement);
 
     // objects
+    scene.add(floor);
     scene.add(dancer);
 
     // controls
     controls = new OrbitControls(camera, renderer.domElement);
 
-    controls.minDistance = 900;
-    controls.maxDistance = 900;
+    controls.enableZoom = false;
+    controls.enableRotate = true;
+    controls.enableDamping = true;
     controls.maxPolarAngle = Math.PI / 2;
-    controls.minPolarAngle = 0;
+    controls.maxAzimuthAngle = 0;
+    controls.minAzimuthAngle = 0;
 
     // postprocessing
     composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
 
-    afterImagePass = new AfterimagePass(0.98075);
+    afterImagePass = new AfterimagePass(0.9765);
     composer.addPass(afterImagePass);
 
     bloomPass = new UnrealBloomPass(new Vector2(window.innerWidth, window.innerHeight),
