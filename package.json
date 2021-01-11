@@ -1,5 +1,5 @@
 {
-  "name": "clarisse",
+  "name": "ekstase",
   "version": "0.0.1",
   "description": "framework with threejs, typescript, sass and webpack",
   "main": "main.ts",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/lexiboi/clarisse#readme",
   "devDependencies": {
+    "@types/parcel-env": "0.0.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "cz-conventional-changelog": "^3.3.0",
@@ -32,8 +33,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "parcel-bundler": "^1.12.4",
-    "typescript": "^4.1.3",
-    "@types/parcel-env": "0.0.0"
+    "typescript": "^4.1.3"
   },
   "config": {
     "commitizen": {
