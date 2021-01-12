@@ -4,7 +4,11 @@
 
 three.js sketch created for a decentralized hackathon called ekstase.
 
-### Demo
+Check it out
+
+https://ekstase.alexpetercharles.ch
+
+### GIF
 
 ![Demo Gif](demo.gif)
 
